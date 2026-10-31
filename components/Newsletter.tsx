@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import { Mail } from "lucide-react";
 
 export default function Newsletter() {
   const [state, setState] = useState<"idle" | "busy" | "ok" | "error">("idle");
@@ -31,6 +32,8 @@ export default function Newsletter() {
     <form onSubmit={onSubmit} noValidate className="relative">
       <label htmlFor="nl-email" className="sr-only">Email address</label>
       <div className="flex items-stretch gap-2">
+        <div className="relative min-w-0 flex-1">
+        <Mail size={18} strokeWidth={1.5} aria-hidden className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-on-dark/80" />
         <input
           id="nl-email"
           name="email"
@@ -39,8 +42,9 @@ export default function Newsletter() {
           autoComplete="email"
           aria-describedby="nl-status"
           placeholder="Email address"
-          className="field !min-h-11 !border-[#1c3d46] !bg-transparent !text-on-dark"
+          className="field !min-h-11 !pl-10 !border-[#1c3d46] !bg-transparent !text-on-dark"
         />
+        </div>
         <button type="submit" disabled={state === "busy"} className="btn btn-primary min-h-11 shrink-0 px-4">Join</button>
       </div>
       <div className="absolute -left-[9999px]" aria-hidden="true">

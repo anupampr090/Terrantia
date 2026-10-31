@@ -61,17 +61,19 @@ export default function CtaBand() {
           onFocus={() => setFocus(true)}
           onBlur={(e) => { if (!e.currentTarget.contains(e.relatedTarget)) setFocus(false); }}
         >
-          <figure className="m-0 min-h-[260px] md:min-h-[240px]" aria-live={playing ? "off" : "polite"} aria-atomic="true">
+          <figure className="m-0 min-h-[280px] md:min-h-[280px]" aria-live={playing ? "off" : "polite"} aria-atomic="true">
             <div ref={slide}>
-              <blockquote className="mx-auto mb-4 max-w-[22em] font-display text-[30px] leading-[1.18] tracking-[-0.01em] text-on-accent md:text-[48px]">
+              <span aria-hidden className="block select-none font-display text-[80px] leading-[0.6] text-on-accent/35 md:text-[96px]">&ldquo;</span>
+              <blockquote className="mx-auto mb-5 mt-2 max-w-[22em] font-display text-[30px] leading-[1.18] tracking-[-0.01em] text-on-accent md:text-[48px]">
                 &ldquo;{s.quote}&rdquo;
               </blockquote>
-              <figcaption className="text-[15px] text-on-accent">
+              <figcaption className="inline-flex items-center justify-center gap-3 text-[15px] text-on-accent">
+                <span aria-hidden className="h-px w-6 bg-on-accent/60" />
                 {s.name}
               </figcaption>
             </div>
           </figure>
-          <div className="mt-2 flex items-center justify-center gap-2">
+          <div className="mt-1 flex items-center justify-center gap-2">
             <button type="button" className={icon} aria-label="Previous story" onClick={() => go(-1)}>
               <ChevronLeft size={20} aria-hidden />
             </button>

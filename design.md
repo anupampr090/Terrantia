@@ -109,7 +109,10 @@ The page alternates between these bands. No two adjacent bands may share a surfa
 - Date picker: keyboard operable, no past dates, check-out disabled until check-in is set.
 
 ### Room (pinned scroll)
-- One room at a time inside a 100svh pinned stage: large 4:3 image with a 12px radius, name in card-title or larger display type, one-line description, two features in small body, 'Sleeps N', 'from' price in muted text (placeholder), and a text link 'View room'.
+- One room at a time inside a 100svh pinned stage: large image with a 12px radius, name in display type, one clean description sentence, then a quiet placeholder note, icon rows, price block and a text link 'View room'.
+- **Icon rows:** a two-column list (one column under 400px). Each row is a thin teal line icon (Lucide, 1.5px stroke, accent colour, no background circle, decorative) beside a label. 'Sleeps N' comes first, then what the photo shows. One shared component (`RoomDetails`) and one icon registry (`RoomIcon`) so size and stroke never drift.
+- **Price block:** 'FROM' in label type, the amount in the display serif with tabular figures, '/ night' muted, and a small 'Placeholder price' tag.
+- **Placeholder note:** never inside the description sentence. One muted line with an info icon: 'Placeholder copy until final text is supplied.'
 - No card boxes or borders. Thin 2px accent progress line, no numeric pagination.
 - Fallback (reduced motion, no-JS, short screens): a plain stacked list of the three rooms with the same content.
 

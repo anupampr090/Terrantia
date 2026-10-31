@@ -8,7 +8,10 @@ import Reveal from "./Reveal";
 import RoomModal from "./RoomModal";
 import { ArrowIcon } from "./ArrowLink";
 import { prefersReducedMotion } from "@/hooks/useReducedMotion";
-import { rooms, formatRate, ROOM_HOLD, type Room } from "@/lib/rooms";
+import RoomDetails from "./RoomDetails";
+import RoomPrice from "./RoomPrice";
+import PlaceholderNote from "./PlaceholderNote";
+import { rooms, roomHighlights, ROOM_HOLD, type Room } from "@/lib/rooms";
 
 const PIN_QUERY = "(prefers-reduced-motion: no-preference) and (min-height: 560px)";
 const HOLD = ROOM_HOLD; // share of each segment a room holds
@@ -25,19 +28,6 @@ function ViewButton({ r, onOpen }: { r: Room; onOpen: (r: Room) => void }) {
       <span>View room<span className="sr-only">: {r.name}</span></span>
       <ArrowIcon />
     </button>
-  );
-}
-
-function Price({ r }: { r: Room }) {
-  return <p className="text-[14px] leading-[1.5] text-muted">From {formatRate(r.nightlyRate)} / night (placeholder)</p>;
-}
-
-function Features({ r }: { r: Room }) {
-  return (
-    <ul className="space-y-1 text-[15px] leading-[1.5]">
-      {r.features.map((f) => <li key={f}>{f}</li>)}
-      <li>Sleeps {r.sleeps}</li>
-    </ul>
   );
 }
 
@@ -59,11 +49,12 @@ function Stacked({ onOpen }: { onOpen: (r: Room) => void }) {
           </div>
           <div className="mt-8 grid gap-6 md:grid-cols-12 md:gap-8">
             <h3 className="text-[34px] leading-[1.1] md:col-span-6 md:text-[48px]">{r.name}</h3>
-            <div className="space-y-5 md:col-span-6">
-              <p className="max-w-[44ch]">{r.description}</p>
-              <Features r={r} />
-              <Price r={r} />
-              <ViewButton r={r} onOpen={onOpen} />
+            <div className="md:col-span-6">
+              <p className="max-w-[40ch]">{r.description}</p>
+              <PlaceholderNote className="mt-3" />
+              <RoomDetails items={roomHighlights(r)} className="mt-6" />
+              <RoomPrice rate={r.nightlyRate} className="mt-6" />
+              <div className="mt-5"><ViewButton r={r} onOpen={onOpen} /></div>
             </div>
           </div>
         </Reveal>
@@ -165,9 +156,11 @@ function Pinned({ onOpen }: { onOpen: (r: Room) => void }) {
               >
                 <h3 className="text-[34px] leading-[1.05] tracking-[-0.015em] lg:text-[56px]">{r.name}</h3>
                 <p className="mt-2 truncate text-[15px] lg:mt-5 lg:max-w-[40ch] lg:overflow-visible lg:whitespace-normal lg:text-[16px]">{r.description}</p>
-                <div className="mt-3 lg:mt-6"><Features r={r} /></div>
-                <div className="mt-3 lg:mt-6"><Price r={r} /></div>
-                <div className="mt-1 lg:mt-4"><ViewButton r={r} onOpen={onOpen} /></div>
+                <PlaceholderNote className="hidden lg:mt-3 lg:flex" />
+                <div className="mt-3 lg:hidden"><RoomDetails items={roomHighlights(r, 3)} /></div>
+                <div className="mt-6 hidden lg:block"><RoomDetails items={roomHighlights(r)} /></div>
+                <RoomPrice rate={r.nightlyRate} className="mt-3 lg:mt-6" />
+                <div className="mt-1 lg:mt-5"><ViewButton r={r} onOpen={onOpen} /></div>
               </div>
             ))}
             </div>

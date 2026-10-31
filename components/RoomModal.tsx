@@ -3,7 +3,11 @@ import { useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { X } from "lucide-react";
-import { formatRate, type Room } from "@/lib/rooms";
+import RoomIcon from "./RoomIcon";
+import RoomDetails from "./RoomDetails";
+import RoomPrice from "./RoomPrice";
+import PlaceholderNote from "./PlaceholderNote";
+import type { Room } from "@/lib/rooms";
 
 type LenisLike = { stop: () => void; start: () => void };
 const lenis = () => (window as unknown as { __lenis?: LenisLike }).__lenis;
@@ -65,19 +69,17 @@ export default function RoomModal({ room, onClose }: { room: Room; onClose: () =
           <Image src={room.image} alt={room.alt} fill sizes="(min-width: 920px) 880px, 100vw" className="object-cover" />
         </div>
         <div className="p-6 md:p-10">
-          <span className="eyebrow">Sleeps {room.sleeps}</span>
-          <h2 id="room-modal-title" className="text-[36px] leading-[1.1] md:text-[44px]">{room.name}</h2>
+          <span className="flex items-center gap-2 font-sans text-[12px] font-medium uppercase tracking-[0.12em] text-muted">
+            <RoomIcon name="guests" />
+            Sleeps {room.sleeps}
+          </span>
+          <h2 id="room-modal-title" className="mt-3 text-[36px] leading-[1.1] md:text-[44px]">{room.name}</h2>
           <p className="mt-4 max-w-[60ch]">{room.description}</p>
+          <PlaceholderNote className="mt-3" />
           <h3 className="mt-8 font-sans text-[12px] font-medium uppercase tracking-[0.12em] text-muted">Amenities</h3>
-          <ul className="mt-3 grid gap-x-8 gap-y-3 text-[15px] sm:grid-cols-2">
-            {room.amenities.map((a) => (
-              <li key={a}>{a}</li>
-            ))}
-          </ul>
-          <div className="mt-8 flex flex-wrap items-center justify-between gap-4">
-            <p className="text-[13px] text-muted">
-              From {formatRate(room.nightlyRate)} / night <span className="font-medium">(placeholder price)</span>
-            </p>
+          <RoomDetails items={room.amenities} variant="full" className="mt-4" />
+          <div className="mt-8 flex flex-wrap items-center justify-between gap-x-6 gap-y-4 border-t border-hairline pt-6">
+            <RoomPrice rate={room.nightlyRate} />
             <Link href={`/book?room=${room.id}`} className="btn btn-primary">Request this room</Link>
           </div>
         </div>
