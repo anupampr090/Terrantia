@@ -1,0 +1,83 @@
+@import "tailwindcss";
+
+:root {
+  --color-canvas: #f6faf9;
+  --color-surface: #e0eeed;
+  --color-surface-strong: #cde3e1;
+  --color-ink: #0b1f24;
+  --color-body: #2c4247;
+  --color-muted: #4f666a;
+  --color-hairline: #c6dcda;
+  --color-accent: #0f6b73;
+  --color-accent-hover: #0a5259;
+  --color-on-accent: #ffffff;
+  --color-dark: #09222a;
+  --color-on-dark: #f6faf9;
+  --color-on-dark-muted: #9fbcc0;
+  --color-focus: #d9572b;
+  --color-danger: #b3261e;
+}
+
+@theme inline {
+  --color-canvas: var(--color-canvas);
+  --color-surface: var(--color-surface);
+  --color-surface-strong: var(--color-surface-strong);
+  --color-ink: var(--color-ink);
+  --color-body: var(--color-body);
+  --color-muted: var(--color-muted);
+  --color-hairline: var(--color-hairline);
+  --color-accent: var(--color-accent);
+  --color-accent-hover: var(--color-accent-hover);
+  --color-on-accent: var(--color-on-accent);
+  --color-dark: var(--color-dark);
+  --color-on-dark: var(--color-on-dark);
+  --color-on-dark-muted: var(--color-on-dark-muted);
+  --color-focus: var(--color-focus);
+  --color-danger: var(--color-danger);
+  --font-display: var(--font-cormorant), Georgia, serif;
+  --font-sans: var(--font-inter), system-ui, sans-serif;
+}
+
+@layer base {
+  html { background: var(--color-canvas); }
+  body {
+    background: var(--color-canvas);
+    color: var(--color-body);
+    font: 400 17px/1.6 var(--font-inter), system-ui, sans-serif;
+  }
+  h1, h2, h3 { font-family: var(--font-cormorant), Georgia, serif; font-weight: 400; color: var(--color-ink); text-wrap: balance; }
+  a { color: inherit; }
+  :focus-visible { outline: 2px solid var(--color-focus); outline-offset: 2px; }
+}
+
+section[id] { scroll-margin-top: 80px; }
+.container-x { max-width: 1200px; margin: 0 auto; padding-inline: 16px; }
+@media (min-width: 768px) { .container-x { padding-inline: 32px; } }
+.section-pad { padding: 96px 0; }
+@media (min-width: 768px) { .section-pad { padding: 160px 0; } }
+.eyebrow { display:block; font: 500 12px/1.4 var(--font-inter); letter-spacing: .12em; text-transform: uppercase; color: var(--color-muted); margin-bottom: 16px; }
+.btn { display:inline-flex; align-items:center; justify-content:center; min-height:48px; padding:0 24px; border-radius:8px; font:500 15px/1 var(--font-inter); text-decoration:none; border:1px solid transparent; cursor:pointer; }
+.btn { transition: background-color .2s ease-out, transform .15s ease-out; }
+.btn:active { transform: scale(0.98); }
+.btn-primary { background: var(--color-accent); color: var(--color-on-accent); }
+.btn-primary:hover { background: var(--color-accent-hover); }
+.btn-secondary { border-color: var(--color-ink); color: var(--color-ink); background: transparent; }
+.btn-secondary:hover { background: var(--color-surface); }
+.link { color: var(--color-accent); text-decoration: underline; text-underline-offset: 4px; font-weight: 500; }
+.link:hover { text-decoration-thickness: 2px; }
+.field-label { display:block; font:500 12px var(--font-inter); letter-spacing:.12em; text-transform:uppercase; color:var(--color-muted); margin-bottom:8px; }
+.field { width:100%; height:48px; border:1px solid var(--color-hairline); border-radius:8px; background:var(--color-canvas); padding:0 12px; font:400 16px var(--font-inter); color:var(--color-ink); }
+
+/* react-day-picker redefines its colours on .rdp-root, so map them to our tokens here */
+:root .rdp-root {
+  --rdp-accent-color: var(--color-accent);
+  --rdp-accent-background-color: var(--color-surface);
+  --rdp-range_start-color: var(--color-on-accent);
+  --rdp-range_end-color: var(--color-on-accent);
+  --rdp-range_middle-color: var(--color-ink);
+  --rdp-today-color: var(--color-accent);
+}
+
+/* Reveal: hidden only once JS has set .js, and never under reduced motion */
+.js .rv { opacity: 0; transform: translateY(14px); }
+@media (prefers-reduced-motion: reduce) { .btn { transition: none; } .btn:active { transform: none; } .js .rv { opacity: 1 !important; transform: none !important; } html { scroll-behavior: auto; } }

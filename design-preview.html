@@ -1,0 +1,253 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Terrantia: Design Preview</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --color-canvas:#f6faf9;--color-surface:#e0eeed;--color-surface-strong:#cde3e1;
+  --color-ink:#0b1f24;--color-body:#2c4247;--color-muted:#4f666a;--color-hairline:#c6dcda;
+  --color-accent:#0f6b73;--color-accent-hover:#0a5259;--color-on-accent:#fff;
+  --color-dark:#09222a;--color-on-dark:#f6faf9;--color-on-dark-muted:#9fbcc0;
+  --color-focus:#d9572b;--color-danger:#b3261e;
+  --font-display:'Cormorant Garamond',Georgia,serif;--font-body:'Inter',system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0}
+html{scroll-behavior:smooth}
+body{background:var(--color-canvas);color:var(--color-body);font:400 17px/1.6 var(--font-body)}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--color-focus);outline-offset:2px}
+.wrap{max-width:1200px;margin:0 auto;padding:0 32px}
+section{padding:128px 0}
+h1,h2,h3,.display{font-family:var(--font-display);font-weight:400;color:var(--color-ink);text-wrap:balance}
+h2{font-size:56px;line-height:1.08;letter-spacing:-.015em}
+.eyebrow{font:500 12px/1.4 var(--font-body);letter-spacing:.12em;text-transform:uppercase;color:var(--color-muted);margin-bottom:16px;display:block}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:0 24px;border-radius:8px;font:500 15px/1 var(--font-body);text-decoration:none;border:1px solid transparent;cursor:pointer}
+.btn-primary{background:var(--color-accent);color:var(--color-on-accent)}
+.btn-primary:hover{background:var(--color-accent-hover)}
+.btn-secondary{border-color:var(--color-ink);color:var(--color-ink);background:transparent}
+.btn-secondary:hover{background:var(--color-surface)}
+.link{color:var(--color-accent);text-decoration:underline;text-underline-offset:4px;font-weight:500}
+.link:hover{text-decoration-thickness:2px}
+.note{font-size:13px;color:var(--color-muted)}
+
+/* placeholder imagery (warm graded gradients, no real photos yet) */
+.ph{position:relative;border-radius:12px;overflow:hidden;background:linear-gradient(160deg,#e9b98a,#c7825a 45%,#6d5a63)}
+.ph::after{content:attr(data-label);position:absolute;left:12px;bottom:10px;font:500 11px var(--font-body);letter-spacing:.12em;text-transform:uppercase;color:#fff;background:rgb(20 20 19/.55);padding:4px 8px;border-radius:999px}
+.ph.pool{background:linear-gradient(160deg,#f2d3a0,#6fb0b5 55%,#2f6f7a)}
+.ph.dusk{background:linear-gradient(170deg,#3b3550,#c9735a 60%,#f0b079)}
+.ph.sand{background:linear-gradient(160deg,#f0dcc0,#d8b48a 60%,#a98866)}
+.ph.sea{background:linear-gradient(170deg,#f7d9ad,#78b7c0 55%,#1f5a6b)}
+
+/* nav */
+nav{position:fixed;inset:0 0 auto 0;height:80px;z-index:20;display:flex;align-items:center;color:var(--color-on-dark);transition:background .3s,color .3s}
+nav.solid{background:var(--color-canvas);color:var(--color-ink);border-bottom:1px solid var(--color-hairline)}
+nav .wrap{display:flex;align-items:center;justify-content:space-between;width:100%}
+.logo{font:500 28px var(--font-display);letter-spacing:.04em;text-decoration:none}
+.links{display:flex;gap:32px;align-items:center}
+.links a{font-size:15px;text-decoration:none}
+.links a.btn{color:var(--color-on-accent)}
+
+/* hero */
+.hero{min-height:100vh;padding:0;position:relative;display:flex;align-items:flex-end;color:var(--color-on-dark);background:linear-gradient(180deg,#2a2438 0%,#9c5a52 45%,#e8a56c 80%,#f4cf9a 100%);overflow:hidden}
+.hero::before{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgb(20 20 19/.75),rgb(20 20 19/.15) 60%)}
+.hero .wrap{position:relative;padding-bottom:64px;width:100%}
+.hero h1{font-size:88px;line-height:1.02;letter-spacing:-.02em;color:var(--color-on-dark);max-width:12ch}
+.hero p{margin:24px 0 40px;max-width:46ch;font-size:19px;color:var(--color-on-dark)}
+.vidtag{position:absolute;top:100px;right:32px;font-size:12px;letter-spacing:.12em;text-transform:uppercase;background:rgb(20 20 19/.55);padding:6px 12px;border-radius:999px}
+.bar{display:grid;grid-template-columns:repeat(3,1fr) auto;gap:16px;align-items:end;background:var(--color-canvas);color:var(--color-ink);padding:20px;border-radius:12px;box-shadow:0 24px 48px -24px rgb(20 20 19/.25)}
+label{display:block;font:500 12px var(--font-body);letter-spacing:.12em;text-transform:uppercase;color:var(--color-muted);margin-bottom:8px}
+input,select,textarea{width:100%;height:48px;border:1px solid var(--color-hairline);border-radius:8px;background:var(--color-canvas);padding:0 12px;font:400 16px var(--font-body);color:var(--color-ink)}
+
+/* intro */
+.intro p{font:400 40px/1.2 var(--font-display);letter-spacing:-.01em;color:var(--color-ink);max-width:24em}
+
+/* rooms */
+.rooms{background:var(--color-surface)}
+.head{margin-bottom:64px}
+.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:32px}
+.card{background:var(--color-canvas);border-radius:12px;padding:16px}
+.card .ph{aspect-ratio:4/3;transition:transform .6s}
+.card .imgwrap{border-radius:12px;overflow:hidden}
+.card:hover .ph{transform:scale(1.03)}
+.card h3{font-size:28px;line-height:1.2;font-weight:500;margin:20px 8px 8px}
+.card p{margin:0 8px;font-size:15px;line-height:1.5}
+.card .meta{display:flex;justify-content:space-between;align-items:center;margin:20px 8px 8px}
+
+/* experiences */
+.row{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;margin-bottom:96px}
+.row:last-child{margin-bottom:0}
+.row.flip .ph{order:2}
+.row .ph{aspect-ratio:5/4}
+.row h3{font-size:40px;line-height:1.1;margin-bottom:16px}
+
+/* gallery */
+.gallery{background:var(--color-dark);color:var(--color-on-dark)}
+.gallery h2{color:var(--color-on-dark)}
+.gallery .eyebrow{color:var(--color-on-dark-muted)}
+.masonry{display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:200px;gap:16px}
+.masonry .ph:nth-child(1){grid-row:span 2}
+.masonry .ph:nth-child(4){grid-column:span 2}
+.masonry .ph:nth-child(6){grid-row:span 2}
+
+/* stories */
+.stories{background:var(--color-surface)}
+.quote{background:var(--color-canvas);border-radius:12px;padding:32px}
+.quote blockquote{font:400 28px/1.2 var(--font-display);color:var(--color-ink);margin-bottom:24px}
+.ctrls{display:flex;gap:8px;margin-top:32px}
+.icon{width:44px;height:44px;border-radius:8px;border:1px solid var(--color-ink);background:transparent;color:var(--color-ink);font-size:18px;cursor:pointer}
+.icon:hover{background:var(--color-canvas)}
+
+/* cta */
+.cta{background:var(--color-accent);color:var(--color-on-accent);text-align:center}
+.cta h2{color:var(--color-on-accent);margin-bottom:16px}
+.cta p{margin-bottom:32px;color:var(--color-on-accent)}
+.cta .btn{background:var(--color-canvas);color:var(--color-ink)}
+
+/* footer */
+footer{background:var(--color-dark);color:var(--color-on-dark-muted);padding:96px 0 48px;font-size:15px}
+footer h4{font:500 12px var(--font-body);letter-spacing:.12em;text-transform:uppercase;color:var(--color-on-dark);margin-bottom:16px}
+footer .cols{display:grid;grid-template-columns:repeat(4,1fr);gap:32px;padding-bottom:48px;border-bottom:1px solid #1c3d46}
+footer li{list-style:none;margin-bottom:8px}
+footer ul{padding:0}
+footer .legal{padding-top:24px;font-size:13px}
+footer input{background:transparent;border-color:#1c3d46;color:var(--color-on-dark)}
+
+/* reveal: hidden only when JS has run and motion is allowed */
+.js .rv{opacity:0;transform:translateY(14px);transition:opacity .5s ease-out,transform .5s ease-out}
+.js .rv.in{opacity:1;transform:none}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .js .rv{opacity:1;transform:none;transition:none}
+  .card .ph{transition:none}.card:hover .ph{transform:none}
+}
+@media (max-width:1023px){
+  .grid3{grid-template-columns:repeat(2,1fr)}
+  .masonry{grid-template-columns:repeat(2,1fr)}
+  .masonry .ph:nth-child(4){grid-column:span 1}
+}
+@media (max-width:767px){
+  body{font-size:16px}
+  .wrap{padding:0 16px}
+  section{padding:80px 0}
+  h2{font-size:38px}
+  .hero h1{font-size:52px}
+  .links a:not(.btn){display:none}
+  .bar{grid-template-columns:1fr}
+  .vidtag{right:16px}
+  .intro p{font-size:28px}
+  .grid3,.row,footer .cols{grid-template-columns:1fr}
+  .row{gap:24px;margin-bottom:64px}
+  .row.flip .ph{order:0}
+  .row h3{font-size:32px}
+  .masonry{grid-auto-rows:160px}
+}
+</style>
+</head>
+<body>
+<nav id="nav">
+  <div class="wrap">
+    <a class="logo" href="#top">Terrantia</a>
+    <div class="links">
+      <a href="#rooms">Rooms</a><a href="#experiences">Experiences</a><a href="#gallery">Gallery</a><a href="#stories">Stories</a>
+      <a class="btn btn-primary" href="#book">Reserve</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero" id="top">
+  <span class="vidtag">Placeholder for hero film</span>
+  <div class="wrap">
+    <h1>Where the land meets the sea</h1>
+    <p>A beachfront retreat of eighteen villas, set between palms and open water.</p>
+    <form class="bar" onsubmit="return false">
+      <div><label for="ci">Check-in</label><input id="ci" type="date"></div>
+      <div><label for="co">Check-out</label><input id="co" type="date"></div>
+      <div><label for="g">Guests</label><select id="g"><option>2 guests</option><option>1 guest</option><option>3 guests</option><option>4 guests</option></select></div>
+      <button class="btn btn-primary" type="submit">Check availability</button>
+    </form>
+  </div>
+</header>
+
+<section class="intro">
+  <div class="wrap">
+    <span class="eyebrow rv">Welcome</span>
+    <p class="rv">Slow mornings, warm water and long evenings on the sand. Terrantia is built around doing less, and noticing more.</p>
+  </div>
+</section>
+
+<section class="rooms" id="rooms">
+  <div class="wrap">
+    <div class="head rv"><span class="eyebrow">Rooms</span><h2>Three ways to stay</h2></div>
+    <div class="grid3">
+      <article class="card rv"><div class="imgwrap"><div class="ph dusk" data-label="Placeholder photo"></div></div><h3>Garden Villa</h3><p>King bed, private garden, outdoor shower.<br>Sleeps 2.</p><div class="meta"><span class="note">From $000 / night (placeholder)</span><a class="link" href="#">View room</a></div></article>
+      <article class="card rv"><div class="imgwrap"><div class="ph pool" data-label="Placeholder photo"></div></div><h3>Pool Suite</h3><p>Direct pool access, lounge and terrace.<br>Sleeps 3.</p><div class="meta"><span class="note">From $000 / night (placeholder)</span><a class="link" href="#">View room</a></div></article>
+      <article class="card rv"><div class="imgwrap"><div class="ph sea" data-label="Placeholder photo"></div></div><h3>Beach Residence</h3><p>Two bedrooms, beachfront deck, kitchenette.<br>Sleeps 5.</p><div class="meta"><span class="note">From $000 / night (placeholder)</span><a class="link" href="#">View room</a></div></article>
+    </div>
+  </div>
+</section>
+
+<section id="experiences">
+  <div class="wrap">
+    <div class="head rv"><span class="eyebrow">Experiences</span><h2>Time well spent</h2></div>
+    <div class="row rv"><div class="ph sand" data-label="Placeholder photo"></div><div><h3>Spa and wellness</h3><p>Treatments, yoga at sunrise and a quiet pool for the afternoon.</p><p style="margin-top:24px"><a class="link" href="#">Explore the spa</a></p></div></div>
+    <div class="row flip rv"><div class="ph dusk" data-label="Placeholder photo"></div><div><h3>Dining</h3><p>Seasonal menus, served on the beach after dark.</p><p style="margin-top:24px"><a class="link" href="#">See the menus</a></p></div></div>
+    <div class="row rv"><div class="ph sea" data-label="Placeholder photo"></div><div><h3>On the water</h3><p>Snorkelling, paddleboards and sunset sailing.</p><p style="margin-top:24px"><a class="link" href="#">View activities</a></p></div></div>
+  </div>
+</section>
+
+<section class="gallery" id="gallery">
+  <div class="wrap">
+    <div class="head rv"><span class="eyebrow">Gallery</span><h2>The place, in light</h2></div>
+    <div class="masonry rv">
+      <div class="ph dusk" data-label="Placeholder"></div><div class="ph pool" data-label="Placeholder"></div><div class="ph sand" data-label="Placeholder"></div>
+      <div class="ph sea" data-label="Placeholder"></div><div class="ph" data-label="Placeholder"></div><div class="ph pool" data-label="Placeholder"></div><div class="ph dusk" data-label="Placeholder"></div>
+    </div>
+  </div>
+</section>
+
+<section class="stories" id="stories">
+  <div class="wrap">
+    <div class="head rv"><span class="eyebrow">Guest stories</span><h2>In their words</h2></div>
+    <div class="grid3">
+      <figure class="quote rv"><blockquote>“Placeholder quote about the quiet and the light.”</blockquote><span class="eyebrow">Guest name, placeholder</span></figure>
+      <figure class="quote rv"><blockquote>“Placeholder quote about the food and the staff.”</blockquote><span class="eyebrow">Guest name, placeholder</span></figure>
+      <figure class="quote rv"><blockquote>“Placeholder quote about the beach at dusk.”</blockquote><span class="eyebrow">Guest name, placeholder</span></figure>
+    </div>
+    <div class="ctrls"><button class="icon" aria-label="Previous">←</button><button class="icon" aria-label="Pause">❚❚</button><button class="icon" aria-label="Next">→</button></div>
+  </div>
+</section>
+
+<section class="cta" id="book">
+  <div class="wrap rv">
+    <h2>Request your stay</h2>
+    <p>Send a request and our team will reply by email. No payment is taken.</p>
+    <a class="btn" href="#top">Check availability</a>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="cols">
+      <div><h4>Stay</h4><ul><li>Rooms</li><li>Offers</li><li>Getting here</li></ul></div>
+      <div><h4>Experiences</h4><ul><li>Spa</li><li>Dining</li><li>Water</li></ul></div>
+      <div><h4>Contact</h4><ul><li>Address (placeholder)</li><li>Phone (placeholder)</li><li>WhatsApp</li></ul></div>
+      <div><h4>Newsletter</h4><label for="nl" style="color:var(--color-on-dark-muted)">Email</label><input id="nl" type="email"></div>
+    </div>
+    <p class="legal">© Terrantia. Concept demo. All media, prices and copy are placeholders.</p>
+  </div>
+</footer>
+
+<script>
+document.documentElement.classList.add('js');
+const nav=document.getElementById('nav'),hero=document.querySelector('.hero');
+const onScroll=()=>nav.classList.toggle('solid',scrollY>hero.offsetHeight-90);
+addEventListener('scroll',onScroll,{passive:true});onScroll();
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{rootMargin:'0px 0px -10% 0px'});
+document.querySelectorAll('.rv').forEach((el,i)=>{el.style.transitionDelay=(i%3)*60+'ms';io.observe(el)});
+</script>
+</body>
+</html>
