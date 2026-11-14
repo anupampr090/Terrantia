@@ -34,7 +34,7 @@ export default function Footer() {
           <div>
             <h3 style={colStyle}>Stay</h3>
             <ul className="m-0 list-none space-y-0 p-0">
-              <li><a className={a} href="/#rooms">Rooms</a></li>
+              <li><Link className={a} href="/#rooms">Rooms</Link></li>
               <li><Link className={a} href="/book">Request a stay</Link></li>
               <li><Link className={a} href="/book">Check availability</Link></li>
             </ul>
@@ -42,9 +42,12 @@ export default function Footer() {
           <div>
             <h3 style={colStyle}>Experiences</h3>
             <ul className="m-0 list-none space-y-0 p-0">
-              <li><a className={a} href="/#experiences">Spa, dining and water</a></li>
-              <li><a className={a} href="/#gallery">Gallery</a></li>
-              <li><a className={a} href="/#experiences">All experiences</a></li>
+              <li><Link className={a} href="/#experiences">Spa, dining and water</Link></li>
+              <li><Link className={a} href="/#facilities">Facilities</Link></li>
+              <li><Link className={a} href="/#nearby">Nearby places</Link></li>
+              <li><Link className={a} href="/#faq">Good to know</Link></li>
+              <li><Link className={a} href="/#gallery">Gallery</Link></li>
+              <li><Link className={a} href="/#experiences">All experiences</Link></li>
             </ul>
           </div>
           <div>

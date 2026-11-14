@@ -1,9 +1,18 @@
 // All prices and copy are PLACEHOLDERS until the resort supplies real content.
+import { getBookingRoom } from "./booking-rooms";
+
+/** One source for the placeholder rate, so the home page and /book never disagree. */
+const rate = (id: string) => getBookingRoom(id)?.nightlyRate ?? 0;
 
 /** Keys map to Lucide icons in components/RoomIcon.tsx. */
 export type IconKey =
   | "guests" | "bed" | "twin" | "bath" | "balcony" | "pool" | "loungers" | "view" | "terrace"
-  | "ceiling" | "floor" | "ac" | "wifi" | "breakfast" | "minibar" | "housekeeping";
+  | "ceiling" | "floor" | "ac" | "wifi" | "breakfast" | "minibar" | "housekeeping"
+  | "size"
+  // facilities (lib/facilities.ts)
+  | "parking" | "smoking" | "restaurant" | "bar" | "roomservice" | "desk" | "luggage"
+  | "spa" | "sauna" | "yoga" | "gym" | "meeting" | "business" | "laundry" | "transfer"
+  | "accessible" | "concierge";
 
 export type Detail = { icon: IconKey; label: string };
 
@@ -32,19 +41,21 @@ export const rooms: Room[] = [
     id: "garden-villa",
     name: "Balcony Room",
     sleeps: 2,
-    nightlyRate: 0,
+    nightlyRate: rate("garden-villa"),
     image: "/media/rooms/room-garden.jpg",
     position: "62% 50%",
     alt: "Bedroom with a king bed, a timber ceiling and sliding glass doors to a screened balcony",
     description: "A calm bedroom with a king bed, warm wood floors and glass doors opening to a screened balcony.",
     placeholder: true,
     details: [
+      { icon: "size", label: "32 m²" },
       { icon: "bed", label: "King bed" },
       { icon: "balcony", label: "Screened balcony" },
       { icon: "ceiling", label: "Timber ceiling" },
       { icon: "floor", label: "Warm wood floors" },
     ],
     amenities: [
+      { icon: "size", label: "32 m²" },
       { icon: "bed", label: "King bed" },
       { icon: "balcony", label: "Screened balcony" },
       { icon: "ceiling", label: "Timber ceiling" },
@@ -57,19 +68,21 @@ export const rooms: Room[] = [
     id: "pool-suite",
     name: "Poolside Twin Room",
     sleeps: 2,
-    nightlyRate: 0,
+    nightlyRate: rate("pool-suite"),
     image: "/media/rooms/room-pool.jpg",
     position: "42% 50%",
     alt: "Twin beds in a bedroom with sliding glass doors opening to a pool and sun loungers",
     description: "Twin beds and sliding glass doors that open onto a pool terrace with sun loungers.",
     placeholder: true,
     details: [
+      { icon: "size", label: "30 m²" },
       { icon: "twin", label: "Twin beds" },
       { icon: "pool", label: "Direct pool access" },
       { icon: "loungers", label: "Sun loungers" },
       { icon: "balcony", label: "Sliding glass doors" },
     ],
     amenities: [
+      { icon: "size", label: "30 m²" },
       { icon: "twin", label: "Twin beds" },
       { icon: "pool", label: "Pool terrace" },
       { icon: "loungers", label: "Sun loungers" },
@@ -82,19 +95,21 @@ export const rooms: Room[] = [
     id: "beach-residence",
     name: "Bay View Suite",
     sleeps: 2,
-    nightlyRate: 0,
+    nightlyRate: rate("beach-residence"),
     image: "/media/rooms/room-beach.jpg",
     position: "62% 50%",
     alt: "Bright bedroom with a freestanding bath and wide windows over a hillside bay",
     description: "A bright suite with a freestanding bath and wide windows over a hillside bay.",
     placeholder: true,
     details: [
+      { icon: "size", label: "58 m²" },
       { icon: "bed", label: "King bed" },
       { icon: "bath", label: "Freestanding bath" },
       { icon: "view", label: "Views over the bay" },
       { icon: "terrace", label: "Terrace" },
     ],
     amenities: [
+      { icon: "size", label: "58 m²" },
       { icon: "bed", label: "King bed" },
       { icon: "bath", label: "Freestanding bath" },
       { icon: "view", label: "Bay view terrace" },

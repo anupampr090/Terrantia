@@ -10,7 +10,9 @@ import Magnetic from "./Magnetic";
 const links = [
   { href: "#rooms", label: "Rooms" },
   { href: "#experiences", label: "Experiences" },
+  { href: "#facilities", label: "Facilities" },
   { href: "#gallery", label: "Gallery" },
+  { href: "#nearby", label: "Nearby" },
 ];
 
 type LenisLike = { stop: () => void; start: () => void };

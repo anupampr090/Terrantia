@@ -6,7 +6,6 @@ import { X } from "lucide-react";
 import RoomIcon from "./RoomIcon";
 import RoomDetails from "./RoomDetails";
 import RoomPrice from "./RoomPrice";
-import PlaceholderNote from "./PlaceholderNote";
 import type { Room } from "@/lib/rooms";
 
 type LenisLike = { stop: () => void; start: () => void };
@@ -75,7 +74,6 @@ export default function RoomModal({ room, onClose }: { room: Room; onClose: () =
           </span>
           <h2 id="room-modal-title" className="mt-3 text-[36px] leading-[1.1] md:text-[44px]">{room.name}</h2>
           <p className="mt-4 max-w-[60ch]">{room.description}</p>
-          <PlaceholderNote className="mt-3" />
           <h3 className="mt-8 font-sans text-[12px] font-medium uppercase tracking-[0.12em] text-muted">Amenities</h3>
           <RoomDetails items={room.amenities} variant="full" className="mt-4" />
           <div className="mt-8 flex flex-wrap items-center justify-between gap-x-6 gap-y-4 border-t border-hairline pt-6">

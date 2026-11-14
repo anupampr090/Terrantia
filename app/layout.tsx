@@ -9,7 +9,7 @@ const cormorant = Cormorant_Garamond({ variable: "--font-cormorant", subsets: ["
 const inter = Inter({ variable: "--font-inter", subsets: ["latin"], weight: ["400", "500"] });
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
-const description = "A beachfront retreat of eighteen villas, set between palms and open water. Concept demo.";
+const description = "A beachfront retreat of rooms and suites, set between palms and open water. Concept demo.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),

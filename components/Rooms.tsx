@@ -1,5 +1,5 @@
 "use client";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import Image from "next/image";
 import { gsap } from "gsap";
@@ -51,7 +51,6 @@ function Stacked({ onOpen }: { onOpen: (r: Room) => void }) {
             <h3 className="text-[34px] leading-[1.1] md:col-span-6 md:text-[48px]">{r.name}</h3>
             <div className="md:col-span-6">
               <p className="max-w-[40ch]">{r.description}</p>
-              <PlaceholderNote className="mt-3" />
               <RoomDetails items={roomHighlights(r)} className="mt-6" />
               <RoomPrice rate={r.nightlyRate} className="mt-6" />
               <div className="mt-5"><ViewButton r={r} onOpen={onOpen} /></div>
@@ -68,7 +67,7 @@ function Pinned({ onOpen }: { onOpen: (r: Room) => void }) {
   const wrap = useRef<HTMLDivElement>(null);
   const stage = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const el = stage.current;
     if (!el) return;
     gsap.registerPlugin(ScrollTrigger);
@@ -79,6 +78,10 @@ function Pinned({ onOpen }: { onOpen: (r: Room) => void }) {
       const inners = gsap.utils.toArray<HTMLElement>("[data-inner]", el);
       const texts = gsap.utils.toArray<HTMLElement>("[data-text]", el);
       const fill = el.querySelector<HTMLElement>("[data-fill]");
+
+      // Starting state, owned by GSAP only (never inline CSS transforms: GSAP reads those as px and the layers stick).
+      gsap.set(layers.slice(1), { yPercent: 100 });
+      gsap.set(inners.slice(1), { yPercent: -100, scale: 1.08 });
 
       const tl = gsap.timeline({
         defaults: { ease: "none" },
@@ -123,9 +126,8 @@ function Pinned({ onOpen }: { onOpen: (r: Room) => void }) {
               key={r.id}
               data-layer
               className="absolute inset-0 overflow-hidden will-change-transform"
-              style={i > 0 ? { transform: "translateY(100%)" } : undefined}
             >
-              <div data-inner className="absolute inset-0 will-change-transform" style={i > 0 ? { transform: "translateY(-100%) scale(1.08)" } : undefined}>
+              <div data-inner className="absolute inset-0 will-change-transform">
                 <Image
                   src={r.image}
                   alt={r.alt}
@@ -156,7 +158,6 @@ function Pinned({ onOpen }: { onOpen: (r: Room) => void }) {
               >
                 <h3 className="text-[34px] leading-[1.05] tracking-[-0.015em] lg:text-[56px]">{r.name}</h3>
                 <p className="mt-2 truncate text-[15px] lg:mt-5 lg:max-w-[40ch] lg:overflow-visible lg:whitespace-normal lg:text-[16px]">{r.description}</p>
-                <PlaceholderNote className="hidden lg:mt-3 lg:flex" />
                 <div className="mt-3 lg:hidden"><RoomDetails items={roomHighlights(r, 3)} /></div>
                 <div className="mt-6 hidden lg:block"><RoomDetails items={roomHighlights(r)} /></div>
                 <RoomPrice rate={r.nightlyRate} className="mt-3 lg:mt-6" />
@@ -213,6 +214,7 @@ export default function Rooms() {
               </span>
             ))}
           </h2>
+          <PlaceholderNote className="mt-5" text="Room names, sizes, prices and copy are placeholders until the resort supplies final details." />
         </div>
       </div>
       {pinned ? (

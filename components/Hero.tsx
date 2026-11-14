@@ -96,7 +96,7 @@ export default function Hero() {
           </span>
         </h1>
         <p className={`hero-fade mb-8 mt-5 max-w-[46ch] text-[17px] text-on-dark [text-shadow:0_1px_12px_rgba(9,34,42,0.6)] md:mb-10 md:mt-6 md:text-[19px] ${hideFade}`}>
-          A beachfront retreat of eighteen villas, set between palms and open water.
+          A beachfront retreat of rooms and suites, set between palms and open water.
         </p>
         </div>
         <div className={`hero-fade ${hideFade}`}>

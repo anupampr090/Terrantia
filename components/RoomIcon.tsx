@@ -1,6 +1,8 @@
 import {
-  Armchair, BedDouble, BedSingle, Bath, BrushCleaning, Coffee, DoorOpen, Layers, House,
-  Mountain, Umbrella, Users, Waves, Wifi, Wind, Wine, type LucideIcon,
+  Accessibility, Armchair, BedDouble, BedSingle, Bath, BrushCleaning, Briefcase, CircleParking, Clock,
+  Coffee, Cigarette, ConciergeBell, DoorOpen, Dumbbell, Flame, Flower2, HandPlatter, Layers, House,
+  Luggage, Mountain, PersonStanding, Plane, Presentation, Ruler, Shirt, Umbrella, UtensilsCrossed, Users,
+  Waves, Wifi, Wind, Wine, type LucideIcon,
 } from "lucide-react";
 import type { IconKey } from "@/lib/rooms";
 
@@ -22,6 +24,24 @@ const ICONS: Record<IconKey, LucideIcon> = {
   breakfast: Coffee,
   minibar: Wine,
   housekeeping: BrushCleaning,
+  size: Ruler,
+  parking: CircleParking,
+  smoking: Cigarette,
+  restaurant: UtensilsCrossed,
+  bar: Wine,
+  roomservice: HandPlatter,
+  desk: Clock,
+  luggage: Luggage,
+  spa: Flower2,
+  sauna: Flame,
+  yoga: PersonStanding,
+  gym: Dumbbell,
+  meeting: Presentation,
+  business: Briefcase,
+  laundry: Shirt,
+  transfer: Plane,
+  accessible: Accessibility,
+  concierge: ConciergeBell,
 };
 
 export default function RoomIcon({ name, size = 18, className = "" }: { name: IconKey; size?: number; className?: string }) {
