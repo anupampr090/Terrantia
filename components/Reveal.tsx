@@ -15,7 +15,7 @@ export default function Reveal({
     const targets = stagger ? Array.from(el.children) : [el];
     const ctx = gsap.context(() => {
       gsap.fromTo(targets, { opacity: 0, y: 14 }, {
-        opacity: 1, y: 0, duration: 0.5, ease: "power1.out", stagger: stagger ? 0.06 : 0,
+        opacity: 1, y: 0, duration: 0.4, ease: "power1.out", stagger: stagger ? 0.06 : 0,
         scrollTrigger: { trigger: el, start: "top 90%", once: true },
       });
     }, el);

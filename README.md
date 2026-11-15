@@ -39,6 +39,10 @@ Limits to know before going live:
 
 Placeholder photos are from Pexels; see `CREDITS.md`. The source and licence of the hero film are not confirmed. Untouched originals live in `media-originals/` (not served, not in git). Re-create derived files with `node scripts/encode-hero.mjs` and `python scripts/grade-media.py`.
 
+## Adding a real map
+
+The location section shows a drawn placeholder, not a live map. To embed one, add the map provider to `frame-src` (and `img-src` if needed) in the Content-Security-Policy in `next.config.ts`; without that the browser blocks it.
+
 ## Docs
 
 `PRODUCT.md` (what it is and who it is for), `design.md` (look, feel and motion), `plan.md` (structure and phases).

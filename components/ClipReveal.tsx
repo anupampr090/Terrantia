@@ -27,8 +27,8 @@ export default function ClipReveal({
       gsap.set(el, { clipPath: "inset(100% 0% 0% 0%)" });
       gsap.set(inn, { scale: 1.08 });
       const st = { trigger: el, start: "top 85%", once: true };
-      gsap.to(el, { clipPath: "inset(0% 0% 0% 0%)", duration: 0.9, ease: "power2.out", delay, scrollTrigger: st, clearProps: "clipPath" });
-      gsap.to(inn, { scale: 1, duration: 0.9, ease: "power2.out", delay, scrollTrigger: st, clearProps: "transform" });
+      gsap.to(el, { clipPath: "inset(0% 0% 0% 0%)", duration: 0.4, ease: "power2.out", delay, scrollTrigger: st, clearProps: "clipPath" });
+      gsap.to(inn, { scale: 1, duration: 0.4, ease: "power2.out", delay, scrollTrigger: st, clearProps: "transform" });
     });
     if (parallax) {
       mm.add("(prefers-reduced-motion: no-preference) and (min-width: 768px) and (hover: hover)", () => {
@@ -69,7 +69,7 @@ export function MaskHeading({ children, className = "" }: { children: React.Reac
     mm.add("(prefers-reduced-motion: no-preference)", () => {
       gsap.set(l, { yPercent: 110 });
       gsap.to(l, {
-        yPercent: 0, duration: 0.6, ease: "expo.out",
+        yPercent: 0, duration: 0.4, ease: "expo.out",
         scrollTrigger: { trigger: w, start: "top 90%", once: true },
       });
     });
@@ -96,7 +96,7 @@ export function RiseIn({ children, className = "" }: { children: React.ReactNode
     const mm = gsap.matchMedia();
     mm.add("(prefers-reduced-motion: no-preference)", () => {
       gsap.fromTo(el, { y: 40, opacity: 0 }, {
-        y: 0, opacity: 1, duration: 0.9, ease: "power2.out",
+        y: 0, opacity: 1, duration: 0.4, ease: "power2.out",
         scrollTrigger: { trigger: el, start: "top 98%", once: true },
       });
     });

@@ -9,10 +9,11 @@ import Magnetic from "./Magnetic";
 
 const links = [
   { href: "#rooms", label: "Rooms" },
+  { href: "#dining", label: "Dining" },
+  { href: "#wellness", label: "Wellness" },
   { href: "#experiences", label: "Experiences" },
-  { href: "#facilities", label: "Facilities" },
-  { href: "#gallery", label: "Gallery" },
-  { href: "#nearby", label: "Nearby" },
+  { href: "#offers", label: "Offers" },
+  { href: "#location", label: "Location" },
 ];
 
 type LenisLike = { stop: () => void; start: () => void };
@@ -129,7 +130,7 @@ export default function Nav() {
         <div className="container-x flex w-full items-center justify-between">
           <Link href="/" className="font-display text-[28px] font-medium tracking-[0.04em] no-underline">Terrantia</Link>
           <div className="flex items-center gap-8">
-            <div className="hidden items-center gap-8 md:flex">
+            <div className="hidden items-center gap-6 lg:flex xl:gap-8">
               {links.map((l) => (
                 <a
                   key={l.href}
@@ -147,7 +148,7 @@ export default function Nav() {
             <button
               ref={toggle}
               type="button"
-              className="-mr-2 inline-flex h-11 w-11 items-center justify-center md:hidden"
+              className="-mr-2 inline-flex h-11 w-11 items-center justify-center lg:hidden"
               aria-label="Open menu"
               aria-expanded={open}
               aria-controls="mobile-menu"
@@ -166,7 +167,7 @@ export default function Nav() {
           role="dialog"
           aria-modal="true"
           aria-label="Menu"
-          className="fixed inset-0 z-40 flex h-dvh flex-col bg-canvas text-ink md:hidden"
+          className="fixed inset-0 z-40 flex h-dvh flex-col bg-canvas text-ink lg:hidden"
         >
           <div className="container-x flex h-20 w-full shrink-0 items-center justify-between border-b border-hairline">
             <span className="font-display text-[28px] font-medium tracking-[0.04em]">Terrantia</span>
@@ -174,9 +175,9 @@ export default function Nav() {
               <X size={24} aria-hidden="true" />
             </button>
           </div>
-          <div className="container-x flex w-full flex-1 flex-col justify-center gap-6">
+          <div className="container-x flex w-full flex-1 flex-col justify-center gap-5 overflow-y-auto py-6">
             {links.map((l) => (
-              <a key={l.href} href={l.href} onClick={close} className="font-display text-[40px] leading-[1.1] text-ink no-underline">{l.label}</a>
+              <a key={l.href} href={l.href} onClick={close} className="inline-flex min-h-11 items-center font-display text-[36px] leading-[1.1] text-ink no-underline">{l.label}</a>
             ))}
             <Link href="/book" onClick={close} className="btn btn-primary mt-4 !text-on-accent">Reserve</Link>
           </div>

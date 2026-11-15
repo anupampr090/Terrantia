@@ -81,13 +81,20 @@ The page alternates between these bands. No two adjacent bands may share a surfa
 
 | Section | Surface | Notes |
 |---|---|---|
-| Hero | Video over dark scrim | Pinned; headline in canvas colour; next band rises over it like a curtain |
-| Intro | Canvas | One large serif sentence, revealed word by word on scroll |
-| Rooms | Surface (seafoam) | Pinned scroll: one large room at a time, no card boxes |
-| Experiences | Canvas | Three near full-bleed photo panels, one short line each |
-| Gallery | Dark | Pinned horizontal pan on desktop, masonry on touch and small screens |
+| Hero | Video over dark scrim | Place line, the name as the headline, one specific sentence, three facts, date search, one direct-booking perk. Not pinned |
+| Proof strip | Canvas | Rating summary and two award slots, labelled sample until real |
+| Intro | Canvas | One large serif sentence, plain text with one short fade |
+| Rooms | Surface (seafoam) | Pinned scene on desktop only; stacked list elsewhere |
+| Dining | Canvas | Large photo beside text and icon rows |
+| Wellness | Surface (seafoam) | Mirrored composition |
+| Experiences | Canvas | One wide water panel and three activities |
+| Offers | Surface (seafoam) | Two sample stay packages |
+| Facilities | Surface (seafoam) | Grouped icon rows |
+| Gallery | Dark | Masonry grid at every size, lightbox |
+| Location | Canvas | Getting here, map placeholder, nearby places carousel |
+| FAQ | Surface (seafoam) | Questions and direct-booking perks |
 | Booking CTA | Accent | Rotating guest quote (placeholder) above the request button |
-| Footer | Dark | Muted text, large Terrantia wordmark rising into view |
+| Footer | Dark | Muted text, large Terrantia wordmark |
 
 ## 6. Components
 
@@ -144,16 +151,12 @@ Motion is a system, not decoration. Every animation comes from the rules below.
 | Stagger | Card groups | 0.06s between items | `power1.out` | Maximum 6 items per stagger |
 | Headline line reveal | Enters viewport | 0.6s | `expo.out` | Short headlines only (under 8 words). Revert split on cleanup. |
 | Parallax | Scrub | Linked to scroll | linear | At most three image layers, 6–8% travel |
-| Hero pin and curtain | Scroll 0 → 100vh | Linked to scroll | linear | Hero pins; video scales 1 → 1.12, scrim to 0.6, headline drifts up and fades; next band covers it |
 | Intro loader | First visit per session, home only | About 1.8s | `expo.out`, `power3.inOut` | Teal overlay, wordmark letters rise, overlay wipes up. Skippable. Never shown for reduced motion or no-JS |
 | Page transition | Internal link click | About 0.7s in, 0.7s out | `power3.inOut` | Teal curtain wipes over, route changes, curtain wipes away. Not used for back and forward |
-| Rooms pin | Scroll, about 3 x 100vh | Linked to scroll | linear | One room at a time; clip-path crossfade with a scale settle 1.08 → 1; thin progress line |
-| Gallery pan | Scroll, desktop only | Linked to scroll | linear | Pinned horizontal pan of the photo track |
+| Rooms pin | Scroll, about 3 x 100vh, desktop with a fine pointer only | Linked to scroll | linear | One room at a time; clip-path crossfade with a scale settle 1.08 → 1; thin progress line |
+| Scroll feel | Wheel and trackpad | Smooth glide (lerp 0.1) | n/a | Normal distance per wheel notch. No slowdown, speed cap or snapping (NN/g: changing scroll speed costs users more than it gives). Touch scrolls natively |
+| Hero exit | Scroll, while the hero leaves | Linked to scroll | linear | Video scales 1 to about 1.06 and dims slightly. The hero is not pinned |
 | Magnetic button | Pointer move, desktop only | 0.5s | `power3.out` | Primary buttons lean 25% toward the pointer |
-| Scroll feel | Wheel and trackpad only | Continuous smoothing (lerp 0.08) | n/a | Each wheel notch travels 65% of normal. Touch keeps native scrolling |
-| Speed limit | Wheel and trackpad only | Sliding 0.5s window | n/a | A flick cannot travel more than about 1.3 screens per half second, tapering smoothly rather than stopping dead, so sections are never skipped by surprise |
-| Section magnet | Stop near a section best view | Pull 1.1s after 0.32s stillness | ease-out cubic | Pulls to the nearest point within 22% of the viewport, only in the direction you are scrolling. Points: hero, intro, each room, each experience panel, gallery start and end, booking band, footer. Never inside the gallery pan |
-| Dwell hold | After settling on a full section | 0.4s | n/a | Wheel input is held briefly so the view rests. Not applied between room steps. Released by any key press or click |
 | Image hover | Pointer | 0.6s | `power2.out` | Scale 1 → 1.03 |
 | Section anchor | Nav click | Lenis `scrollTo` | Lenis default | Offset by nav height |
 

@@ -35,19 +35,18 @@ export default function Footer() {
             <h3 style={colStyle}>Stay</h3>
             <ul className="m-0 list-none space-y-0 p-0">
               <li><Link className={a} href="/#rooms">Rooms</Link></li>
+              <li><Link className={a} href="/#offers">Offers</Link></li>
               <li><Link className={a} href="/book">Request a stay</Link></li>
-              <li><Link className={a} href="/book">Check availability</Link></li>
             </ul>
           </div>
           <div>
-            <h3 style={colStyle}>Experiences</h3>
+            <h3 style={colStyle}>Explore</h3>
             <ul className="m-0 list-none space-y-0 p-0">
-              <li><Link className={a} href="/#experiences">Spa, dining and water</Link></li>
-              <li><Link className={a} href="/#facilities">Facilities</Link></li>
-              <li><Link className={a} href="/#nearby">Nearby places</Link></li>
-              <li><Link className={a} href="/#faq">Good to know</Link></li>
+              <li><Link className={a} href="/#dining">Dining</Link></li>
+              <li><Link className={a} href="/#wellness">Wellness</Link></li>
+              <li><Link className={a} href="/#experiences">Experiences</Link></li>
               <li><Link className={a} href="/#gallery">Gallery</Link></li>
-              <li><Link className={a} href="/#experiences">All experiences</Link></li>
+              <li><Link className={a} href="/#location">Location</Link></li>
             </ul>
           </div>
           <div>

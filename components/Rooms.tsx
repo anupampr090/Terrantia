@@ -13,7 +13,9 @@ import RoomPrice from "./RoomPrice";
 import PlaceholderNote from "./PlaceholderNote";
 import { rooms, roomHighlights, ROOM_HOLD, type Room } from "@/lib/rooms";
 
-const PIN_QUERY = "(prefers-reduced-motion: no-preference) and (min-height: 560px)";
+// Desktop only: phones, tablets, touch, reduced motion and no JS all get the stacked list.
+const PIN_QUERY =
+  "(prefers-reduced-motion: no-preference) and (min-width: 1024px) and (min-height: 600px) and (hover: hover) and (pointer: fine)";
 const HOLD = ROOM_HOLD; // share of each segment a room holds
 const FADE = 1 - HOLD; // share spent crossfading
 
@@ -31,10 +33,10 @@ function ViewButton({ r, onOpen }: { r: Room; onOpen: (r: Room) => void }) {
   );
 }
 
-/** Default, no-JS and reduced-motion layout: a plain, stacked list. */
+/** Default layout (phones, tablets, touch, reduced motion, no JS): a plain, stacked list. */
 function Stacked({ onOpen }: { onOpen: (r: Room) => void }) {
   return (
-    <div className="container-x space-y-24 md:space-y-32">
+    <div className="container-x space-y-20 md:space-y-32">
       {rooms.map((r) => (
         <Reveal as="article" key={r.id}>
           <div className="relative aspect-[4/3] overflow-hidden rounded-xl md:aspect-[16/10]">
@@ -47,10 +49,11 @@ function Stacked({ onOpen }: { onOpen: (r: Room) => void }) {
               style={{ objectPosition: r.position }}
             />
           </div>
-          <div className="mt-8 grid gap-6 md:grid-cols-12 md:gap-8">
-            <h3 className="text-[34px] leading-[1.1] md:col-span-6 md:text-[48px]">{r.name}</h3>
+          <div className="mt-6 grid gap-3 md:mt-8 md:grid-cols-12 md:gap-8">
+            <h3 className="text-[34px] leading-[1.1] tracking-[-0.015em] md:col-span-6 md:text-[48px]">{r.name}</h3>
             <div className="md:col-span-6">
-              <p className="max-w-[40ch]">{r.description}</p>
+              <p className="m-0 max-w-[40ch]">{r.description}</p>
+              <PlaceholderNote className="mt-3" />
               <RoomDetails items={roomHighlights(r)} className="mt-6" />
               <RoomPrice rate={r.nightlyRate} className="mt-6" />
               <div className="mt-5"><ViewButton r={r} onOpen={onOpen} /></div>
@@ -62,7 +65,7 @@ function Stacked({ onOpen }: { onOpen: (r: Room) => void }) {
   );
 }
 
-/** Pinned, scroll-driven layout. Only mounted on the client after the media query matches. */
+/** Pinned, scroll-driven layout. Desktop only: mounted on the client after the media query matches. */
 function Pinned({ onOpen }: { onOpen: (r: Room) => void }) {
   const wrap = useRef<HTMLDivElement>(null);
   const stage = useRef<HTMLDivElement>(null);
@@ -120,7 +123,7 @@ function Pinned({ onOpen }: { onOpen: (r: Room) => void }) {
     <div ref={wrap}>
       <div ref={stage} className="relative h-svh overflow-hidden bg-surface">
         {/* Images */}
-        <div className="absolute inset-x-0 top-0 h-[48svh] overflow-hidden lg:inset-y-0 lg:right-auto lg:h-full lg:w-7/12">
+        <div className="absolute inset-y-0 left-0 w-7/12 overflow-hidden">
           {rooms.map((r) => (
             <div
               key={r.id}
@@ -132,7 +135,7 @@ function Pinned({ onOpen }: { onOpen: (r: Room) => void }) {
                   src={r.image}
                   alt={r.alt}
                   fill
-                  sizes="(min-width: 1024px) 59vw, 100vw"
+                  sizes="59vw"
                   className="object-cover"
                   style={{ objectPosition: r.position }}
                 />
@@ -142,11 +145,11 @@ function Pinned({ onOpen }: { onOpen: (r: Room) => void }) {
         </div>
 
         {/* Text, all rooms share one grid cell; hidden rooms are visibility:hidden so they leave the tab order */}
-        <div className="absolute inset-x-0 bottom-0 top-[48svh] flex items-start px-4 pb-4 pt-5 sm:px-8 lg:left-7/12 lg:top-0 lg:items-center lg:px-16 lg:py-0">
-          <div className="flex w-full max-w-[480px] items-stretch gap-5 lg:gap-8">
+        <div className="absolute inset-y-0 left-7/12 right-0 flex items-center px-16">
+          <div className="flex w-full max-w-[480px] items-stretch gap-8">
             {/* Progress line, decorative, beside the text block */}
             <div aria-hidden="true" className="relative w-[2px] shrink-0 bg-accent/20">
-              <div data-fill className="absolute inset-0 origin-top bg-accent" style={{ transform: "scaleY(0)" }} />
+              <div data-fill className="absolute inset-0 origin-top bg-accent" />
             </div>
             <div className="grid min-w-0 flex-1">
             {rooms.map((r, i) => (
@@ -156,12 +159,11 @@ function Pinned({ onOpen }: { onOpen: (r: Room) => void }) {
                 className={`col-start-1 row-start-1 min-w-0 ${i > 0 ? "invisible" : ""}`}
                 style={i > 0 ? { opacity: 0 } : undefined}
               >
-                <h3 className="text-[34px] leading-[1.05] tracking-[-0.015em] lg:text-[56px]">{r.name}</h3>
-                <p className="mt-2 truncate text-[15px] lg:mt-5 lg:max-w-[40ch] lg:overflow-visible lg:whitespace-normal lg:text-[16px]">{r.description}</p>
-                <div className="mt-3 lg:hidden"><RoomDetails items={roomHighlights(r, 3)} /></div>
-                <div className="mt-6 hidden lg:block"><RoomDetails items={roomHighlights(r)} /></div>
-                <RoomPrice rate={r.nightlyRate} className="mt-3 lg:mt-6" />
-                <div className="mt-1 lg:mt-5"><ViewButton r={r} onOpen={onOpen} /></div>
+                <h3 className="text-[56px] leading-[1.05] tracking-[-0.015em]">{r.name}</h3>
+                <p className="mt-5 max-w-[40ch] text-[16px]">{r.description}</p>
+                <RoomDetails items={roomHighlights(r)} className="mt-6" />
+                <RoomPrice rate={r.nightlyRate} className="mt-6" />
+                <div className="mt-5"><ViewButton r={r} onOpen={onOpen} /></div>
               </div>
             ))}
             </div>
@@ -178,7 +180,7 @@ export default function Rooms() {
   const heading = useRef<HTMLHeadingElement>(null);
   const close = useCallback(() => setActive(null), []);
 
-  // Mode switch: stacked by default (server, no-JS, reduced motion, short screens).
+  // Mode switch: stacked by default (server, no JS, reduced motion, touch, small or short screens).
   useEffect(() => {
     const mq = window.matchMedia(PIN_QUERY);
     const update = () => setPinned(mq.matches);
