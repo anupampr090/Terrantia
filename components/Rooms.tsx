@@ -121,7 +121,7 @@ function Pinned({ onOpen }: { onOpen: (r: Room) => void }) {
       <div ref={stage} className="relative h-svh overflow-hidden bg-surface">
         {/* Images */}
         <div className="absolute inset-x-0 top-0 h-[48svh] overflow-hidden lg:inset-y-0 lg:right-auto lg:h-full lg:w-7/12">
-          {rooms.map((r, i) => (
+          {rooms.map((r) => (
             <div
               key={r.id}
               data-layer

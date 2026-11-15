@@ -11,7 +11,6 @@ export default function Facilities() {
       <div className="container-x">
         <div className="mb-12 grid items-center gap-10 md:mb-20 md:grid-cols-2 md:gap-16">
           <div>
-            <span className="eyebrow">Facilities</span>
             <MaskHeading className="mb-6 text-[38px] leading-[1.08] tracking-[-0.015em] md:text-[56px]">Everything you need</MaskHeading>
             <p className="mb-8 max-w-[34em]">From a quick coffee to a working day, the practical things are already taken care of.</p>
             <ul className="m-0 flex list-none flex-wrap gap-3 p-0">

@@ -4,11 +4,14 @@ import "./globals.css";
 import SmoothScroll from "@/components/SmoothScroll";
 import PageTransition from "@/components/PageTransition";
 import IntroLoader from "@/components/IntroLoader";
+import { siteUrl, siteUrlIsPlaceholder } from "@/lib/site";
 
 const cormorant = Cormorant_Garamond({ variable: "--font-cormorant", subsets: ["latin"], weight: ["400", "500"] });
 const inter = Inter({ variable: "--font-inter", subsets: ["latin"], weight: ["400", "500"] });
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+if (siteUrlIsPlaceholder) {
+  console.warn("[site] NEXT_PUBLIC_SITE_URL is not set: canonical links, the sitemap and share images point at localhost.");
+}
 const description = "A beachfront retreat of rooms and suites, set between palms and open water. Concept demo.";
 
 export const metadata: Metadata = {
@@ -16,6 +19,7 @@ export const metadata: Metadata = {
   title: { default: "Terrantia | Beachfront Resort", template: "%s | Terrantia" },
   description,
   applicationName: "Terrantia",
+  alternates: { canonical: "/" },
   robots: { index: true, follow: true },
   openGraph: {
     type: "website",

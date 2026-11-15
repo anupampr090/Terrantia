@@ -1,16 +1,19 @@
 "use client";
-import { cloneElement, useEffect, useRef, type ReactElement } from "react";
+import { useEffect, useRef, type ReactNode } from "react";
 import { gsap } from "gsap";
 
 /**
  * Pulls its single child a few pixels toward the pointer. Desktop pointer only,
  * off under reduced motion. Uses gsap.quickTo, no React state.
+ * The wrapper span holds the ref and takes the transform. It shrinks to its child,
+ * and when a parent stretches it (a grid cell) the child grows to fill it, so the
+ * child keeps the box it had before. Pass className to size the wrapper explicitly.
  * Usage: <Magnetic><a className="btn btn-primary">Reserve</a></Magnetic>
  */
 export default function Magnetic({
-  children, strength = 0.25,
-}: { children: ReactElement<{ ref?: React.Ref<HTMLElement> }>; strength?: number }) {
-  const ref = useRef<HTMLElement>(null);
+  children, strength = 0.25, className,
+}: { children: ReactNode; strength?: number; className?: string }) {
+  const ref = useRef<HTMLSpanElement>(null);
 
   useEffect(() => {
     const el = ref.current;
@@ -36,5 +39,9 @@ export default function Magnetic({
     return () => mm.revert();
   }, [strength]);
 
-  return cloneElement(children, { ref });
+  return (
+    <span ref={ref} className={`inline-flex [&>*]:grow${className ? ` ${className}` : ""}`}>
+      {children}
+    </span>
+  );
 }

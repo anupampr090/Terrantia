@@ -14,7 +14,7 @@ export default function Intro() {
     if (!el || prefersReducedMotion()) return;
     gsap.registerPlugin(ScrollTrigger);
     const ctx = gsap.context(() => {
-      gsap.fromTo(el.querySelectorAll("[data-w]"), { opacity: 0.3 }, {
+      gsap.fromTo(el.querySelectorAll("[data-w]"), { opacity: 0.55 }, {
         opacity: 1, ease: "none", duration: 1, stagger: 0.1,
         scrollTrigger: { trigger: el, start: "top 80%", end: "bottom 45%", scrub: true },
       });

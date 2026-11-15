@@ -33,18 +33,12 @@ type Props = {
  */
 export default function DateRangeFields({ checkIn, checkOut, onChange, invalid, describedBy }: Props) {
   const [open, setOpen] = useState<null | "in" | "out">(null);
-  const [mounted, setMounted] = useState(false);
   const [months, setMonths] = useState(1);
-  const inBtn = useRef<HTMLButtonElement>(null);
-  const outBtn = useRef<HTMLButtonElement>(null);
   const panel = useRef<HTMLDivElement>(null);
   const opener = useRef<HTMLButtonElement | null>(null);
 
-  useEffect(() => setMounted(true), []);
-
   useEffect(() => {
     if (!open) return;
-    setMonths(window.matchMedia("(min-width: 768px)").matches ? 2 : 1);
     const prevOverflow = document.body.style.overflow;
     document.body.style.overflow = "hidden";
     panel.current?.focus();
@@ -76,7 +70,7 @@ export default function DateRangeFields({ checkIn, checkOut, onChange, invalid, 
     const iso = toISO(day);
     if (!from || to) {
       onChange(iso, "");
-      setOpen("out");
+      show("out");
     } else if (iso < checkIn) {
       onChange(iso, "");
     } else if (iso === checkIn) {
@@ -87,26 +81,33 @@ export default function DateRangeFields({ checkIn, checkOut, onChange, invalid, 
     }
   }
 
-  function trigger(kind: "in" | "out") {
-    return (e: React.MouseEvent<HTMLButtonElement>) => {
-      opener.current = e.currentTarget;
-      setOpen(kind);
-    };
+  // Sizes the calendar for the viewport at the moment it opens or changes step.
+  function show(kind: "in" | "out") {
+    setMonths(window.matchMedia("(min-width: 768px)").matches ? 2 : 1);
+    setOpen(kind);
+  }
+
+  // Only ever called from a click handler, so the ref is not touched during render.
+  function openFrom(btn: HTMLButtonElement, kind: "in" | "out") {
+    opener.current = btn;
+    show(kind);
   }
 
   const value = (iso: string) => label(iso) || <span className="text-muted">Add date</span>;
+  // .field is unlayered CSS, so the error border needs the important flag to win.
+  // A button does not support aria-invalid: the error is tied in with aria-describedby.
   const btnCls =
-    "field flex items-center text-left hover:border-accent";
+    "field flex items-center text-left hover:border-accent" + (invalid ? " !border-danger" : "");
 
   return (
     <>
       <div>
         <label className="field-label" id="bb-in-l" htmlFor="bb-in">Check-in</label>
         <button
-          ref={inBtn} id="bb-in" type="button" className={btnCls}
+          id="bb-in" type="button" className={btnCls}
           aria-haspopup="dialog" aria-expanded={open === "in"}
-          aria-invalid={invalid || undefined} aria-describedby={describedBy}
-          onClick={trigger("in")}
+          aria-describedby={describedBy}
+          onClick={(e) => openFrom(e.currentTarget, "in")}
         >
           {value(checkIn)}
         </button>
@@ -114,16 +115,16 @@ export default function DateRangeFields({ checkIn, checkOut, onChange, invalid, 
       <div>
         <label className="field-label" id="bb-out-l" htmlFor="bb-out">Check-out</label>
         <button
-          ref={outBtn} id="bb-out" type="button" className={btnCls}
+          id="bb-out" type="button" className={btnCls}
           aria-haspopup="dialog" aria-expanded={open === "out"}
-          aria-invalid={invalid || undefined} aria-describedby={describedBy}
-          onClick={trigger("out")}
+          aria-describedby={describedBy}
+          onClick={(e) => openFrom(e.currentTarget, "out")}
         >
           {value(checkOut)}
         </button>
       </div>
 
-      {mounted && open &&
+      {open &&
         createPortal(
           <div className="fixed inset-0 z-50 flex items-end justify-center md:items-center">
             <div className="absolute inset-0 bg-dark/60" aria-hidden="true" onClick={() => setOpen(null)} />

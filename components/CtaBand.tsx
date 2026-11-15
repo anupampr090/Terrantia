@@ -65,7 +65,7 @@ export default function CtaBand() {
             <div ref={slide}>
               <span aria-hidden className="block select-none font-display text-[80px] leading-[0.6] text-on-accent/35 md:text-[96px]">&ldquo;</span>
               <blockquote className="mx-auto mb-5 mt-2 max-w-[22em] font-display text-[30px] leading-[1.18] tracking-[-0.01em] text-on-accent md:text-[48px]">
-                &ldquo;{s.quote}&rdquo;
+                {s.quote}
               </blockquote>
               <figcaption className="inline-flex items-center justify-center gap-3 text-[15px] text-on-accent">
                 <span aria-hidden className="h-px w-6 bg-on-accent/60" />

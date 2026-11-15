@@ -44,7 +44,6 @@ export default function Nearby() {
       <div className="container-x">
         <div className="mb-12 flex items-end justify-between gap-6 md:mb-16">
           <div>
-            <span className="eyebrow">Nearby</span>
             <MaskHeading className="text-[38px] leading-[1.08] tracking-[-0.015em] md:text-[56px]">Close to the water</MaskHeading>
           </div>
           <div className="flex shrink-0 gap-3">

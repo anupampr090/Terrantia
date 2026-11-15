@@ -45,8 +45,8 @@ export default function BookingBar() {
             ))}
           </select>
         </div>
-        <Magnetic>
-          <button type="submit" className="btn btn-primary self-end whitespace-nowrap px-4 md:px-6">Check availability</button>
+        <Magnetic className="min-w-0 self-end">
+          <button type="submit" className="btn btn-primary min-w-0 whitespace-nowrap px-3 md:px-6">Check availability</button>
         </Magnetic>
       </div>
       <p id="bb-err" role="alert" className={error ? "mt-3 text-[14px] text-danger" : "sr-only"}>{error}</p>

@@ -33,7 +33,10 @@ export default function StickyReserve() {
     window.addEventListener("resize", onScroll);
     const ends = new Set<Element>();
     const endIO = new IntersectionObserver((entries) => {
-      for (const e of entries) (e.isIntersecting ? ends.add(e.target) : ends.delete(e.target));
+      for (const e of entries) {
+        if (e.isIntersecting) ends.add(e.target);
+        else ends.delete(e.target);
+      }
       setNearEnd(ends.size > 0);
     });
     if (cta) endIO.observe(cta);

@@ -48,6 +48,8 @@
   h1, h2, h3 { font-family: var(--font-cormorant), Georgia, serif; font-weight: 400; color: var(--color-ink); text-wrap: balance; }
   a { color: inherit; }
   :focus-visible { outline: 2px solid var(--color-focus); outline-offset: 2px; }
+  ::selection { background: var(--color-accent); color: var(--color-on-accent); }
+  html { accent-color: var(--color-accent); caret-color: var(--color-accent); scrollbar-color: var(--color-accent) var(--color-surface); }
 }
 
 section[id] { scroll-margin-top: 80px; }

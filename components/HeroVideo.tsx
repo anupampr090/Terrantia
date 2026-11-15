@@ -4,13 +4,25 @@ import Image from "next/image";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-/** Poster always renders; the video mounts only when motion is allowed. */
+type Conn = { saveData?: boolean; effectiveType?: string };
+
+/**
+ * Poster always renders. The film mounts only when motion is allowed and the visitor has not asked
+ * to save data (or is on a 2G connection). Phones get the lighter 1280px file.
+ */
 export default function HeroVideo() {
   const [play, setPlay] = useState(false);
+  const [src, setSrc] = useState("/media/hero/hero.mp4");
   const video = useRef<HTMLVideoElement>(null);
   useEffect(() => {
     const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const on = () => setPlay(!mq.matches);
+    const small = window.matchMedia("(max-width: 767px)");
+    const on = () => {
+      const conn = (navigator as Navigator & { connection?: Conn }).connection;
+      const frugal = !!conn && (conn.saveData === true || /2g/.test(conn.effectiveType ?? ""));
+      setSrc(small.matches ? "/media/hero/hero-mobile.mp4" : "/media/hero/hero.mp4");
+      setPlay(!mq.matches && !frugal);
+    };
     on();
     mq.addEventListener("change", on);
     return () => mq.removeEventListener("change", on);
@@ -30,13 +42,14 @@ export default function HeroVideo() {
       onEnterBack: () => { v.play().catch(() => {}); },
     });
     return () => st.kill();
-  }, [play]);
+  }, [play, src]);
   return (
     <>
       <Image src="/media/hero/hero-poster.jpg" alt="" fill priority sizes="100vw" className="object-cover" />
       {play && (
         <video
           ref={video}
+          key={src}
           className="absolute inset-0 h-full w-full object-cover"
           poster="/media/hero/hero-poster.jpg"
           muted
@@ -46,7 +59,7 @@ export default function HeroVideo() {
           preload="metadata"
           aria-hidden="true"
         >
-          <source src="/media/hero/hero.mp4" type="video/mp4" />
+          <source src={src} type="video/mp4" />
         </video>
       )}
     </>

@@ -79,12 +79,12 @@ export default function Hero() {
           <HeroVideo />
         </div>
       </div>
-      <div aria-hidden="true" className="absolute inset-0 bg-[linear-gradient(0deg,rgba(9,34,42,0.8),rgba(9,34,42,0.1)_60%),linear-gradient(90deg,rgba(9,34,42,0.42),rgba(9,34,42,0)_55%)]" />
+      <div aria-hidden="true" className="absolute inset-0 bg-[linear-gradient(0deg,rgba(9,34,42,0.8),rgba(9,34,42,0.1)_60%),linear-gradient(90deg,rgba(9,34,42,0.6),rgba(9,34,42,0)_62%)]" />
       <div aria-hidden="true" className="absolute inset-0 hidden bg-[linear-gradient(20deg,rgba(9,34,42,0.55),rgba(9,34,42,0)_65%)] md:block lg:hidden" />
       <div ref={dim}aria-hidden="true" className="absolute inset-0 bg-dark opacity-0" />
       <div className="container-x relative w-full pb-8 pt-32 md:pb-16">
         <div ref={copy} className="will-change-transform">
-        <h1 className="max-w-[12ch] text-[52px] leading-[1.02] tracking-[-0.02em] text-on-dark [text-shadow:0_2px_24px_rgba(9,34,42,0.45)] md:text-[88px]">
+        <h1 className="max-w-[12ch] text-[52px] leading-[1.02] tracking-[-0.02em] text-on-dark [text-shadow:0_2px_32px_rgba(9,34,42,0.7),0_1px_4px_rgba(9,34,42,0.45)] md:text-[88px]">
           <span className="sr-only">{HEADLINE}</span>
           <span aria-hidden="true">
             {HEADLINE.split(" ").map((w, i) => (

@@ -1,39 +1,55 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
+import { resortEmail, sendMail } from "@/lib/mailer";
+import { honeypotFilled, rateLimit, readJsonBody, tooManyRequests } from "@/lib/rate-limit";
+import { saveRecord } from "@/lib/store";
 
 const schema = z.object({
   name: z.string().trim().min(1, "Please enter your name.").max(120),
   email: z.string().trim().email("Please enter a valid email address.").max(200),
   phone: z.string().trim().max(40).optional(),
   message: z.string().trim().min(1, "Please enter a message.").max(2000),
-  website: z.string().optional(), // honeypot
 });
 
-const hits = new Map<string, number[]>();
-function limited(ip: string, max = 5, windowMs = 60_000) {
-  const now = Date.now();
-  const recent = (hits.get(ip) ?? []).filter((t) => now - t < windowMs);
-  recent.push(now);
-  hits.set(ip, recent);
-  return recent.length > max;
-}
-
 export async function POST(req: Request) {
-  const ip = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
-  if (limited(ip)) return NextResponse.json({ error: "Too many requests. Please try again soon." }, { status: 429 });
+  const rl = rateLimit(req, { key: "enquiry", max: 5, windowMs: 60_000 });
+  if (rl.limited) return tooManyRequests(rl.retryAfterSec);
 
-  let body: unknown;
-  try { body = await req.json(); } catch { return NextResponse.json({ error: "Invalid request." }, { status: 400 }); }
+  const read = await readJsonBody(req);
+  if (!read.ok) return read.response;
 
-  const parsed = schema.safeParse(body);
+  if (honeypotFilled(read.body)) return NextResponse.json({ ok: true, delivered: true }); // bots: pretend success
+
+  const parsed = schema.safeParse(read.body);
   if (!parsed.success) {
     return NextResponse.json({ error: parsed.error.issues[0]?.message ?? "Invalid input." }, { status: 400 });
   }
-  if (parsed.data.website) return NextResponse.json({ ok: true }); // bots: pretend success
+  const e = parsed.data;
 
-  const { website: _ignored, ...enquiry } = parsed.data;
-  void _ignored;
-  // Placeholder for email delivery (Resend) in a later phase.
-  console.log("[enquiry] received:", enquiry);
-  return NextResponse.json({ ok: true });
+  const [stored, mail] = await Promise.all([
+    saveRecord("enquiry", { name: e.name, email: e.email, phone: e.phone ?? "", message: e.message }),
+    sendMail({
+      to: resortEmail(),
+      replyTo: e.email,
+      subject: "New website enquiry",
+      text: [
+        "A new enquiry came in through the website.",
+        "",
+        `Name: ${e.name}`,
+        `Email: ${e.email}`,
+        `Phone: ${e.phone || "not given"}`,
+        "",
+        "Message:",
+        e.message,
+        "",
+        "Reply to this email to answer the guest directly.",
+      ].join("\n"),
+    }),
+  ]);
+
+  if (!stored.ok && !mail.ok) {
+    console.error("[enquiry:not-delivered] an enquiry was neither stored nor mailed to the resort.");
+  }
+
+  return NextResponse.json({ ok: true, delivered: mail.ok });
 }

@@ -46,7 +46,7 @@ Single page with anchor navigation, plus `/book` for the booking flow.
 1. The hero booking bar collects check-in, check-out and guests. Rules: no past dates, check-out after check-in, 1 to 14 nights.
 2. `POST /api/availability` returns the room types free for those dates, with a total (nightly rate × nights, seasonal multiplier, tax line). Data comes from `lib/rooms.ts` and `lib/availability.ts` (typed mock data).
 3. The guest selects a room, then enters name, email, phone and special requests.
-4. A review step shows the summary. "Request to book" calls `POST /api/bookings`. The server re-validates the input, re-checks availability, creates a reference (`RS-2026-XXXX`) and returns a confirmation screen.
+4. A review step shows the summary. "Request to book" calls `POST /api/bookings`. The server re-validates the input, re-checks availability, creates a unique reference (`RS-<year>-<6 characters>`), stores the request and returns a confirmation screen.
 5. Emails go to the guest and the resort via Resend when `RESEND_API_KEY` is set. Otherwise they are logged in development.
 6. **No payment in phase 1.** The copy says "request", never "confirmed".
 

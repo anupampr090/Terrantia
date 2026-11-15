@@ -6,6 +6,7 @@ import { getBookingRoom } from "@/lib/booking-rooms";
 
 export const metadata: Metadata = {
   title: "Request your stay",
+  alternates: { canonical: "/book" },
   description: "Check availability and send a booking request to Terrantia. Concept demo with placeholder prices.",
 };
 

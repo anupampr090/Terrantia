@@ -10,7 +10,6 @@ export default function Faq() {
   return (
     <section id="faq" className="section-pad relative z-10 bg-surface">
       <div className="container-x">
-        <span className="eyebrow">Before you book</span>
         <MaskHeading className="mb-12 text-[38px] leading-[1.08] tracking-[-0.015em] md:mb-20 md:text-[56px]">Good to know</MaskHeading>
         <div className="grid items-start gap-10 md:grid-cols-12 md:gap-16">
           <Reveal className="md:col-span-7">

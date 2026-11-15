@@ -30,8 +30,9 @@ export default function IntroLoader() {
         try { sessionStorage.setItem("terrantia-intro", "1"); } catch {}
       }
       markDone();
-      setGone(true);
-      return;
+      // .intro-seen already hides the overlay in CSS. Unmount on the next frame.
+      const raf = requestAnimationFrame(() => setGone(true));
+      return () => cancelAnimationFrame(raf);
     }
 
     const el = root.current;

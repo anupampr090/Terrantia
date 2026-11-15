@@ -1,7 +1,7 @@
 """
 One soft warm-teal grade for every still in public/media (rooms, experiences, gallery).
 
-- Originals are copied once to public/media/_originals/<same path> and always re-read from there,
+- Originals are copied once to media-originals/<same path> (outside public/, git-ignored) and always re-read from there,
   so running this script again never stacks the grade.
 - Per image: tame blown highlights, pull saturation toward a shared target, then split-tone
   (shadows lean teal, highlights lean warm) and add a touch of contrast.
@@ -14,7 +14,7 @@ import numpy as np
 from PIL import Image
 
 ROOT = Path(__file__).resolve().parent.parent / "public" / "media"
-BACKUP = ROOT / "_originals"
+BACKUP = ROOT.parent.parent / "media-originals"
 FOLDERS = ["rooms", "experiences", "gallery"]
 
 TARGET_SAT = 0.30          # shared saturation target (0..1, HSV mean)
